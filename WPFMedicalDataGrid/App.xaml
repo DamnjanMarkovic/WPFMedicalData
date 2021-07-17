@@ -1,0 +1,19 @@
+﻿<Application x:Class="WPFMedicalDataGrid.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFMedicalDataGrid"
+    xmlns:viewmodels="clr-namespace:WPFMedicalDataGrid.ViewModels"
+    xmlns:views="clr-namespace:WPFMedicalDataGrid.Views" 
+    xmlns:controls="clr-namespace:WPFMedicalDataGrid.Controls"
+    
+    
+    >
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Style/CommonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

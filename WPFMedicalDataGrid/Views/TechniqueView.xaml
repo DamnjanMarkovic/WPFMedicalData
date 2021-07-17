@@ -1,0 +1,301 @@
+﻿<local:BaseView x:Class="WPFMedicalDataGrid.Views.TechniqueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFMedicalDataGrid.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded"
+             >
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ListProgram" Source="{Binding MedicalDataListResult.Program}" />
+        <CollectionViewSource x:Key="ListPatientSize" Source="{Binding MedicalDataListResult.PatientSize}" />
+        <CollectionViewSource x:Key="ListFilter" Source="{Binding MedicalDataListResult.Filter}" />
+        <CollectionViewSource x:Key="ListMAS" Source="{Binding ListMAS}" />
+        <CollectionViewSource x:Key="ListMA" Source="{Binding ListMA}" />
+        <CollectionViewSource x:Key="ListFokus" Source="{Binding ListFokus}" />
+
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid x:Name="dataGrid"
+                  ItemsSource="{Binding MedicalDataListResult.Technique}"                                       
+                  Style="{StaticResource DataGridStyle}"
+                  RowEditEnding="Row_Click">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ListProgram}}"
+                    Width="Auto"
+                    SelectedValueBinding="{Binding IdProgram, Mode=Default, 
+                    ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Description"  SelectedValuePath="IDProgram" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>Program</Label>
+                            <ComboBox x:Name="cmb_program" DisplayMemberPath="Description"  SelectedValuePath="IDProgram" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListProgram}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboPatientSize"
+                                        ItemsSource="{Binding Source={StaticResource ListPatientSize}}"
+                                        Width="Auto"
+                    SelectedValueBinding="{Binding IdPatientSize, Mode=Default, 
+                    ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Name"  SelectedValuePath="IDPatientSize" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>PatientSize</Label>
+                            <ComboBox x:Name="cmb_patient_size" DisplayMemberPath="Name"  SelectedValuePath="IDPatientSize" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListPatientSize}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridTextColumn Width="Auto" EditingElementStyle="{StaticResource textBoxInError}"
+                    Binding="{Binding Path=KV, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>KV</Label>
+                            <TextBox x:Name="tbox_kv" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboRadMA" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListMA}}"
+                    SelectedValueBinding="{Binding RAD_MA, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="ValuemA"  SelectedValuePath="ValuemA" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>RAD_MA</Label>
+                            <ComboBox x:Name="cmb_radma" DisplayMemberPath="ValuemA"  SelectedValuePath="ValuemA" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListMA}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboRadFocus" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListFokus}}"
+                    SelectedValueBinding="{Binding RAD_Focus, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Member" SelectedValuePath="StringValue" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>RAD_Focus</Label>
+                            <ComboBox x:Name="cmb_rad_focus" DisplayMemberPath="Member" SelectedValuePath="StringValue" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListFokus}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboRadMAS" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListMAS}}"
+                    SelectedValueBinding="{Binding RAD_MAS, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="ValuemAs"  SelectedValuePath="ValuemAs" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>RAD_MAS</Label>
+                            <ComboBox x:Name="cmb_radmas" DisplayMemberPath="ValuemAs"  SelectedValuePath="ValuemAs" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListMAS}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=RAD_MS, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>RAD_MS</Label>
+                            <TextBox x:Name="tbox_radms" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboFilterRad" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListFilter}}"
+                    SelectedValueBinding="{Binding IdFilter_RAD, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Name" SelectedValuePath="IDFilter" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>Filter_RAD</Label>
+                            <ComboBox x:Name="cmb_filter_rad" DisplayMemberPath="Name" SelectedValuePath="IDFilter" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListFilter}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=AEC, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>AEC</Label>
+                            <TextBox x:Name="tbox_aec" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=BackupMAS, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>BackupMAS</Label>
+                            <TextBox x:Name="tbox_backup_mas" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=Density, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>Density</Label>
+                            <TextBox x:Name="tbox_density" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=ColimatorFovX, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>ColimatorFovX</Label>
+                            <TextBox x:Name="tbox_col_fovx" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=ColimatorFovY, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>ColimatorFovY</Label>
+                            <TextBox x:Name="tbox_col_fovy" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="Auto"
+                    Binding="{Binding Path=FL_FrameDose, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>FL_FrameDose</Label>
+                            <TextBox x:Name="tbox_frame_dose" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboFLMa" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListMA}}"
+                    SelectedValueBinding="{Binding FL_MA, Mode=Default, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="ValuemA" SelectedValuePath="ValuemA" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>FL_MA</Label>
+                            <ComboBox x:Name="cmb_fl_ma" DisplayMemberPath="ValuemA" SelectedValuePath="ValuemA" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListMA}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboFLMas" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListMAS}}"
+                    SelectedValueBinding="{Binding FL_MAS, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus }"  
+                    DisplayMemberPath="ValuemAs" SelectedValuePath="ValuemAs" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>FL_MAS</Label>
+                            <ComboBox x:Name="cmb_fl_mas" DisplayMemberPath="ValuemAs" SelectedValuePath="ValuemAs" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListMAS}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboFLFocus" Width="Auto"
+                                        ItemsSource="{Binding Source={StaticResource ListFokus}}"
+                    SelectedValueBinding="{Binding FL_Focus, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Member" SelectedValuePath="StringValue" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>FL_Focus</Label>
+                            <ComboBox x:Name="cmb_fl_focus" DisplayMemberPath="Member" SelectedValuePath="StringValue" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListFokus}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn x:Name="ComboFilterFL" Width="*"
+                                        ItemsSource="{Binding Source={StaticResource ListFilter}}"
+                    SelectedValueBinding="{Binding IdFilter_FL, Mode=Default, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Name" SelectedValuePath="IDFilter" EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Label>Filter_FL</Label>
+                            <ComboBox x:Name="cmb_filter_fl" DisplayMemberPath="Name" SelectedValuePath="IDFilter" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListFilter}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</local:BaseView>

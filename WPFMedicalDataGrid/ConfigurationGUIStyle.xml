@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<CustomStyle>
+  
+  
+	<CustomRadioButtonProperties>
+
+		<Background>#FF242424</Background>
+		<BorderBrush>Black</BorderBrush >
+		<Foreground >#aecbd1</Foreground >
+
+		<BackgroundMouseOver>#FF242424</BackgroundMouseOver>
+		<BorderColorMouseOver >Black</BorderColorMouseOver >
+		<TextColorMouseOver >#FFFFFF</TextColorMouseOver >
+
+		<BackgroundDisabled >#FF08080A</BackgroundDisabled >
+		<BorderColorDisabled >Black</BorderColorDisabled >
+		<TextColorDisabled >#FF75CEDE</TextColorDisabled >
+
+		<CornerRadius >0</CornerRadius >
+		<BorderThickness >0</BorderThickness >
+
+		<BackgroundChecked>#FF242424</BackgroundChecked>
+		<BorderColorChecked>Gray</BorderColorChecked>
+		<TextColorChecked>#00bfdf</TextColorChecked>
+
+	</CustomRadioButtonProperties>
+
+
+
+</CustomStyle>

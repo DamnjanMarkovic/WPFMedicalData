@@ -1,0 +1,51 @@
+﻿<local:BaseView x:Class="WPFMedicalDataGrid.Views.StandPositionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFMedicalDataGrid.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+                Loaded="UserControl_Loaded"
+             >
+
+
+    <Grid>
+        <DataGrid x:Name="dataGrid" 
+                  ItemsSource="{Binding MedicalDataListResult.StandPosition}" 
+                  Style="{StaticResource DataGridStyle}" RowEditEnding="Row_Click">
+            <DataGrid.Columns>
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>Name</Label>
+                            <TextBox Width="Auto" x:Name="tbox_name" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=Command, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}" >
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>Command</Label>
+                            <TextBox Width="Auto" x:Name="tbox_command" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=ActiveDetector, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Label>ActiveDetector</Label>
+                            <TextBox x:Name="tbox_active_detector" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</local:BaseView>

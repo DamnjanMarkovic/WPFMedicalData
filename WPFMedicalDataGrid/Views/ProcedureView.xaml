@@ -1,0 +1,145 @@
+﻿<local:BaseView x:Class="WPFMedicalDataGrid.Views.ProcedureView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFMedicalDataGrid.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+                Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ListHumanBodyPart" Source="{Binding MedicalDataListResult.AvanseHumanBodyPart}" />
+        <CollectionViewSource x:Key="ListSide" Source="{Binding ListSide}" />
+    </UserControl.Resources>
+
+    <Grid>
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding MedicalDataListResult.Procedure}"
+                  Style="{StaticResource DataGridStyle}" 
+                  RowEditEnding="Row_Click">
+            <DataGrid.Columns>
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=CodingSchema, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Coding Schema</Label>
+                            </Viewbox>
+                            <TextBox x:Name="tbox_coding_schema" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=SchemaVersion, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}" >
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Schema Version</Label>
+                            </Viewbox>
+                            <TextBox x:Name="tbox_schema_version" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=CodeValue, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Code Value</Label>
+                            </Viewbox>
+                            <TextBox x:Name="tbox_code_value" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Description</Label>
+                            </Viewbox>
+                            <TextBox x:Name="tbox_desc" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ListHumanBodyPart}}"                                        
+                    Width="*"
+                    SelectedValueBinding="{Binding IdAvanseHumanBodyPart, Mode=Default,
+                                        ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Name"  SelectedValuePath="IDAvanseHumanBodyPart"
+                                        EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>AvanseHumanBodyPart</Label>
+                            </Viewbox>
+                            <ComboBox DisplayMemberPath="Name" SelectedValuePath="IDAvanseHumanBodyPart" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem>NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListHumanBodyPart}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ListSide}}"
+                                        
+                    Width="*"
+                    SelectedValueBinding="{Binding Side, Mode=Default,
+                                        ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Description"  SelectedValuePath="Name"
+                                        EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Side</Label>
+                            </Viewbox>
+                            <ComboBox x:Name="cmb_side" DisplayMemberPath="Description"  SelectedValuePath="Name" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListSide}}" />
+
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=Order, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Order</Label>
+                            </Viewbox>
+                            <TextBox x:Name="tbox_order" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn EditingElementStyle="{StaticResource textBoxInError}" Width="*"
+                                    Binding="{Binding Path=ReadingPhysician, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}">
+                    <DataGridTextColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>ReadingPhysician</Label>
+                            </Viewbox>
+                            <TextBox x:Name="tbox_reading_physician" TextChanged="tbox_a_TextChanged"></TextBox>
+                        </StackPanel>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</local:BaseView>

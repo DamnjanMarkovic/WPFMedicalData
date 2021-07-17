@@ -1,0 +1,96 @@
+﻿<local:BaseView x:Class="WPFMedicalDataGrid.Views.ProcedureProgramView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFMedicalDataGrid.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded"
+             >
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ListProgram" Source="{Binding MedicalDataListResult.Program}" />
+        <CollectionViewSource x:Key="ListHumanBodyPart" Source="{Binding MedicalDataListResult.HumanBodyPart}" />
+        <CollectionViewSource x:Key="ListSide" Source="{Binding ListSide}" />
+        <CollectionViewSource x:Key="ListProcedure" Source="{Binding MedicalDataListResult.Procedure}" />
+
+    </UserControl.Resources>
+
+
+    <Grid>
+        <DataGrid x:Name="dataGrid"
+                  ItemsSource="{Binding MedicalDataListResult.ProcedureProgram}"
+                  Style="{StaticResource DataGridStyle}"  RowEditEnding="Row_Click" 
+                  >
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Width="*"
+                                        ItemsSource="{Binding Source={StaticResource ListProcedure}}"
+                                        
+                    SelectedValueBinding="{Binding IdProcedure, Mode=Default,
+                                        ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Description"  SelectedValuePath="IDProcedure"
+                                        EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Procedure</Label>
+                            </Viewbox>
+                            <ComboBox x:Name="cmb_proc" DisplayMemberPath="Description"  SelectedValuePath="IDProcedure" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListProcedure}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ListProgram}}" Width="*"
+                    SelectedValueBinding="{Binding IdProgram, Mode=Default,
+                                        ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Description"  SelectedValuePath="IDProgram"
+                                        EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Program</Label>
+                            </Viewbox>
+                            <ComboBox
+                                x:Name="cmb_prog" DisplayMemberPath="Description"  SelectedValuePath="IDProgram" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListProgram}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ListSide}}" Width="*" 
+                    SelectedValueBinding="{Binding Side, Mode=Default,
+                                        ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"  
+                    DisplayMemberPath="Description"  SelectedValuePath="Name"
+                                        EditingElementStyle="{StaticResource comboBoxInError}">
+                    <DataGridComboBoxColumn.Header>
+                        <StackPanel>
+                            <Viewbox >
+                                <Label>Side</Label>
+                            </Viewbox>
+                            <ComboBox x:Name="cmb_side" DisplayMemberPath="Description"  SelectedValuePath="Name" SelectionChanged="cmb_b_Selected">
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem >NOT FILTERED</ComboBoxItem>
+                                        <CollectionContainer Collection="{Binding Source={StaticResource ListSide}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </StackPanel>
+                    </DataGridComboBoxColumn.Header>
+                </DataGridComboBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</local:BaseView>
